@@ -1,7 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
@@ -17,7 +15,7 @@ import Navbar from '../lib/Navbar';
 
 import colors from '../colors'
 
-const HomeScreen = ({props, navigation}) => {
+const SearchScreen = ({props, navigation}) => {
 
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -83,7 +81,7 @@ const HomeScreen = ({props, navigation}) => {
         <View style={styles.body}>
             <ScrollView>
                 <View style={styles.viewCenter}>
-                    <Text>a</Text>
+                    <Text>b</Text>
                 </View>
             </ScrollView>
             {/* navbar */}
@@ -97,4 +95,4 @@ const HomeScreen = ({props, navigation}) => {
     );
 }
 
-export default HomeScreen;
+export default SearchScreen;
