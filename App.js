@@ -19,7 +19,6 @@ const App = () => {
 
   const backButtonClick = () => {
     RootNavigation.navigate("Home");
-    console.log("Back button clicked 🖱");
     return true;
   }
 
@@ -42,7 +41,7 @@ const App = () => {
   return (
     <NavigationContainer ref={RootNavigation.navigationRef}>
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerStyle: {backgroundColor: colors['Alabaster 1']}, headerTitleStyle: {fontFamily: "Poppins-Bold"}, animation: "slide_from_right", headerBackVisible: false}}>
-          <Stack.Screen name="Home" component={HomeScreen}/>
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Search" component={SearchScreen} />
           <Stack.Screen name="Rank" component={RankScreen} />
           <Stack.Screen name="Exposure" component={ExposureScreen} />
