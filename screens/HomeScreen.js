@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFonts } from 'expo-font';
@@ -14,12 +14,15 @@ import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import Navbar from '../lib/Navbar';
 import colors from '../colors';
 import AQIdata from '../lib/AQIdata';
+import AQIdisplay from '../lib/AQIdisplay';
 
 let airData;
+let airDisplay;
 
 export const dataReady = (data) => {
     console.log("HomeScreen.js | "+JSON.stringify(data));
     airData = data;
+    airDisplay = (<AQIdisplay data={airData} />);
 }
 
 const HomeScreen = ({props, navigation}) => {
@@ -51,7 +54,9 @@ const HomeScreen = ({props, navigation}) => {
         <View style={styles.body}>
             <ScrollView>
                 <View style={styles.viewCenter}>
-                    
+                    <Text>
+                    {setInterval(() => {airDisplay}, 5000)}
+                    </Text>
                 </View>
             </ScrollView>
             {/* navbar */}
