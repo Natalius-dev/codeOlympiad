@@ -1,8 +1,8 @@
-import { React, useState, useEffect } from 'react';
+import { React, useEffect } from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
+
 
 // Icons
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons/faLocationDot';
@@ -12,47 +12,18 @@ import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 
 // Libs
 import Navbar from '../lib/Navbar';
+import colors from '../colors';
+import AQIdata from '../lib/AQIdata';
 
-import colors from '../colors'
+let airData;
+
+export const dataReady = (data) => {
+    console.log("HomeScreen.js | "+JSON.stringify(data));
+    airData = data;
+}
 
 const HomeScreen = ({props, navigation}) => {
-
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
-
-    const getLocation = () => {
-        (async () => {
-
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        })();
-    }
-
-    useEffect(() => {
-        getLocation();
-    }, []);
-
-    let locStatus = 'Waiting..';
-    let timestampLoc;
-    let parsedTimestamp;
-    let strTimestamp;
-
-    if (errorMsg) {
-        locStatus = errorMsg;
-    } else if (location) {
-        locStatus = JSON.stringify(location);
-        timestampLoc = JSON.parse(locStatus).timestamp;
-        parsedTimestamp = new Date(timestampLoc);
-        strTimestamp = parsedTimestamp.getHours() + ":" + parsedTimestamp.getMinutes() + ":" + parsedTimestamp.getSeconds();
-    }
-
-
+    AQIdata();
     const [fontsLoaded] = useFonts({
         "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
     });
@@ -60,7 +31,6 @@ const HomeScreen = ({props, navigation}) => {
     if (!fontsLoaded) {
         return null;
     }
-
     const styles = StyleSheet.create({
         body: {
             flex: 1,
@@ -86,7 +56,7 @@ const HomeScreen = ({props, navigation}) => {
             </ScrollView>
             {/* navbar */}
             <Navbar buttons={[
-                { title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faLocationDot} size={20} /><Text style={styles.textCenter}>My Air</Text></View>), onPress: (() => { getLocation(); console.log(strTimestamp); navigation.navigate("Home"); }) },
+                { title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faLocationDot} size={20} /><Text style={styles.textCenter}>My Air</Text></View>), onPress: (() => { console.log("button 1"); navigation.navigate("Home"); }) },
                 { title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faMagnifyingGlassLocation} size={20} /><Text style={styles.textCenter}>Search</Text></View>), onPress: (() => { console.log("button 2"); navigation.navigate("Search"); }) },
                 { title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faChartSimple} size={20} /><Text style={styles.textCenter}>Ranking</Text></View>), onPress: (() => { console.log("button 3"); navigation.navigate("Rank"); }) },
                 { title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faUser} size={20} /><Text style={styles.textCenter}>Exposure</Text></View>), onPress: (() => { console.log("button 4"); navigation.navigate("Exposure"); }) }
