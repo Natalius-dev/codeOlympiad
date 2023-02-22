@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "codeOlympiad",
-    "slug": "codeOlympiad",
+    "name": "Air Monitor",
+    "slug": "airMonitor",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#717C96"
+      },
+      "package": "cc.natalius.airMonitor"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "43a9da74-e022-4e89-bbe6-ddc3e5e0f4a6"
+      }
     }
   }
 }

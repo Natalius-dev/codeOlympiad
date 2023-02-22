@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useFonts } from 'expo-font';
 
@@ -17,16 +17,20 @@ import AQIdata from '../lib/AQIdata';
 import AQIdisplay from '../lib/AQIdisplay';
 
 let airData;
-let airDisplay;
+let updateOut;
 
 export const dataReady = (data) => {
     console.log("HomeScreen.js | "+JSON.stringify(data));
     airData = data;
-    airDisplay = (<AQIdisplay data={airData} />);
+    updateOut(<AQIdisplay data={airData} />);
 }
 
 const HomeScreen = ({props, navigation}) => {
-    AQIdata();
+    const [airDisplay, updateDisplay] = useState(<ActivityIndicator style={{transform: [{scale: 1.5}], margin: 10}} size={"large"} color={colors['Alabaster 1']} />);
+    useEffect(() => {
+        updateOut = updateDisplay;
+    });
+    AQIdata(true);
     const [fontsLoaded] = useFonts({
         "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
     });
@@ -47,16 +51,23 @@ const HomeScreen = ({props, navigation}) => {
             flex: 1,
             justifyContent: "center",
             alignItems: "center"
+        },
+        divider: {
+            flex: 1,
+            height: 1,
+            backgroundColor: colors['Alabaster 1'],
+            marginTop: 10,
+            marginBottom: 10
         }
     });
 
     return (
         <View style={styles.body}>
             <ScrollView>
-                <View style={styles.viewCenter}>
-                    <Text>
-                    {setInterval(() => {airDisplay}, 5000)}
-                    </Text>
+                <View style={[styles.viewCenter, {padding: 20}]}>
+                    {airDisplay}
+                    <View style={styles.divider} />
+                    {airDisplay}
                 </View>
             </ScrollView>
             {/* navbar */}
