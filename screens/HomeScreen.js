@@ -85,7 +85,6 @@ const cityDataReady = (data) => {
     getData("@cityData").then(value => cityDataCache = value);
     if(data.status !== "success") {
         if(cityDataCache !== null){
-            console.log("SAVED!! 🔥🔥🔥");
             getData("@cityData").then(value => {
                 cityData = JSON.parse(value);
                 for (let i = 0; i < cityData.length; i++) {
@@ -115,7 +114,6 @@ const dataReady = (data) => {
     airData = data.data;
     if (data.status !== "success") {
         if(airDataCache !== null) {
-            console.log("SAVED!! 🔥🔥🔥");
             getData("@airData").then(value => {airData = JSON.parse(value).data; updateDisplayOut([(<Text key="title" style={styles.textBold}>Your Location <FontAwesomeIcon icon={faLocationDot} size={25} color={colors['Alabaster 1']} /></Text>),(<AQIdisplay key="data" data={airData} />)]);});
             
         } else {
