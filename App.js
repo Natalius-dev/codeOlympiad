@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
+import BuiltWithScreen from './screens/BuiltWithScreen';
 
 import colors from './colors'
 import * as RootNavigation from './RootNavigation';
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerStyle: {backgroundColor: colors['Alabaster 1']}, headerTitleStyle: {fontFamily: "Poppins-Bold"}, headerBackVisible: false}}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="About" component={AboutScreen} />
+          <Stack.Screen name="Built Using" component={BuiltWithScreen} />
         </Stack.Navigator>
     </NavigationContainer>
   );

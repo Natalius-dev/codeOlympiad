@@ -7,9 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Icons
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons/faLocationDot';
-import { faMagnifyingGlassLocation } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlassLocation';
-import { faChartSimple } from '@fortawesome/free-solid-svg-icons/faChartSimple';
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion';
+import { faCode } from '@fortawesome/free-solid-svg-icons/faCode';
+import { faCity } from '@fortawesome/free-solid-svg-icons/faCity';
 
 // Libs
 import Navbar from '../lib/Navbar';
@@ -52,6 +52,13 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontFamily: "Poppins-Regular"
     },
+    textBold: {
+        fontFamily: "Poppins-Bold",
+        textAlign: "left",
+        alignSelf: "flex-start",
+        fontSize: 25,
+        color: colors['Alabaster 1']
+    },
     viewCenter: {
         flex: 1,
         justifyContent: "center",
@@ -68,7 +75,7 @@ const styles = StyleSheet.create({
     }
 });
 let airData;
-let cityComponents = [(<View style={styles.divider} key="divider" />)];
+let cityComponents = [(<View style={styles.divider} key="divider" />),(<Text key="title" style={styles.textBold}>Major Cities <FontAwesomeIcon icon={faCity} style={{transform: [{translateY: 5}]}} size={30} color={colors['Alabaster 1']} /></Text>)];
 let cityData = [];
 let updateDisplayOut;
 let updateCityOut;
@@ -109,14 +116,14 @@ const dataReady = (data) => {
     if (data.status !== "success") {
         if(airDataCache !== null) {
             console.log("SAVED!! 🔥🔥🔥");
-            getData("@airData").then(value => {airData = JSON.parse(value).data; updateDisplayOut(<AQIdisplay data={airData} />);});
+            getData("@airData").then(value => {airData = JSON.parse(value).data; updateDisplayOut([(<Text key="title" style={styles.textBold}>Your Location <FontAwesomeIcon icon={faLocationDot} size={25} color={colors['Alabaster 1']} /></Text>),(<AQIdisplay key="data" data={airData} />)]);});
             
         } else {
         Alert.alert("Failed to Connect", "Application failed to connect to API, please try again in 1 minute.", [{ text: 'OK', onPress: () => { BackHandler.exitApp(); } }]);
         }
     }
     storeData("@airData", JSON.stringify(airData));
-    updateDisplayOut(<AQIdisplay data={airData} />);
+    updateDisplayOut([(<Text key="title" style={styles.textBold}>Your Location <FontAwesomeIcon icon={faLocationDot} size={25} color={colors['Alabaster 1']} /></Text>),(<AQIdisplay key="data" data={airData} />)]);
 }
 
 const HomeScreen = ({ props, navigation }) => {
@@ -146,6 +153,7 @@ const HomeScreen = ({ props, navigation }) => {
     AQIdata(key2, dataReady, true);
     const [fontsLoaded] = useFonts({
         "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+        "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf")
     });
 
     if (!fontsLoaded) {
@@ -168,10 +176,14 @@ const HomeScreen = ({ props, navigation }) => {
                     onPress: (() => { setTimeout(() => { navigation.navigate("Home"); }, 150) })
                 },
                 {
-                    title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faMagnifyingGlassLocation} size={20} /><Text style={styles.textCenter}>About</Text></View>),
+                    title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faCircleQuestion} size={20} /><Text style={styles.textCenter}>About</Text></View>),
                     onPress: (() => { setTimeout(() => { navigation.navigate("About"); }, 150) })
+                },
+                {
+                    title: (<View style={styles.viewCenter}><FontAwesomeIcon icon={faCode} size={20} /><Text style={styles.textCenter}>Built With</Text></View>),
+                    onPress: (() => { setTimeout(() => { navigation.navigate("Built Using"); }, 150) })
                 }
-            ]} color={colors['Alabaster 1']} borderColor={colors['Alabaster 1']} />
+            ]} color={colors['Alabaster 1']} borderColor={colors['Alabaster 2']} />
         </View>
     );
 }
